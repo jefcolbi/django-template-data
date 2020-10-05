@@ -12,10 +12,10 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'template-data'
+NAME = 'django-template-data'
 DESCRIPTION = 'A library to load data from database to template'
-URL = 'https://github.com/jefcolbi/template-data'
-EMAIL = 'jefcolbi@ygmail.com'
+URL = 'https://github.com/jefcolbi/django-template-data'
+EMAIL = 'jefcolbi@gmail.com'
 AUTHOR = 'jefcolbi'
 REQUIRES_PYTHON = '>=3.5'
 VERSION = '0.0.1'

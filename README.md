@@ -1,4 +1,4 @@
-# Template Data
+# Django Template Data
 
 ### Why?
 You are working on a Django project and you want a way to update some strings 
@@ -7,7 +7,7 @@ or blocks without using a bare CMS or a WYSIWYG. Then this small module is for
  the context to the templates.
 
 ### Installation
-    $ pip install template-data
+    $ pip install django-template-data
     
 ### Usage
 Add 'template_data' in INSTALLED_APPS  
