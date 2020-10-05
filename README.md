@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     ...,
 ]
 ```
-Then `load_data()` to templates context processors
+Then add `load_data()` to templates context processors
 ```
 TEMPLATES = [
     {
@@ -57,13 +57,13 @@ Let say you want a dynamic title, loaded from the database. First create a base
 ...
 ```
 Go to your Django admin to manage TemplateData model. Create two rows, with these
-values:
-key = "title", page = "index", value = "Home"
+values:  
+key = "title", page = "index", value = "Home"  
 key = "title", page = "signin", value = "Login in your account"  
 As you can imagine the title of the index page will be "Home - Sitename" and
  for the signin page will be "Login in your account - Sitename"
  
-You surely noticed how we prepended "- Sitename" to the title in the template.
+You surely noticed how we appended "- Sitename" to the title in the template.
  We can do the same by using the inheriting feature.  
 First we define this template:
 ```html
