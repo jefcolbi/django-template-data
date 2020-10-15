@@ -22,8 +22,11 @@ def load_data(request):
             res[tpl_data.key] = tpl_data.get_value()
         else:
             tmp_value = tpl_data.get_value()
-            res[tpl_data.key] = re.sub("{{ *super *}}", 
-                            needed_datas[(tpl_data.key, tpl_data.inherit_page)],
-                            tmp_value)
+            try:
+                res[tpl_data.key] = re.sub("{{ *super *}}", 
+                                needed_datas[(tpl_data.key, tpl_data.inherit_page)],
+                                tmp_value)
+            except:
+                res[tpl_data.key] = tmp_value
         
     return res   
