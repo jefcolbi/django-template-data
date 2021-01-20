@@ -18,7 +18,7 @@ URL = 'https://github.com/jefcolbi/django-template-data'
 EMAIL = 'jefcolbi@gmail.com'
 AUTHOR = 'jefcolbi'
 REQUIRES_PYTHON = '>=3.5'
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -27,7 +27,7 @@ REQUIRED = [
 
 # What packages are optional?
 EXTRAS = {
-    # 'fancy feature': ['django'],
+    'meta': ['django-meta'],
 }
 
 # The rest you shouldn't have to touch too much :)
