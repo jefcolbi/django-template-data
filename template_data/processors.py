@@ -3,6 +3,7 @@ from django.urls import resolve
 from django.db.models import Q
 import re
 from django.conf import settings
+from django.utils.translation import get_language
 try:
     from meta.views import Meta
     HAS_META = True
@@ -14,9 +15,10 @@ def load_meta(request):
     url_name = resolve(request.path_info).url_name
     if not url_name:
         url_name = request.path
-        
+    lang = get_language()
+                
     tpl_datas = list(TemplateData.objects.filter(Q(page='global')|\
-                        (Q(page=url_name)), key__startswith="meta_"))
+                        (Q(page=url_name)), key__startswith="meta_", lang=lang))
     needed_pages = [tpl_data.inherit_page for tpl_data in tpl_datas \
                     if tpl_data.inherit_page != None]
     needed_datas = {(tpl_data.key, tpl_data.page):tpl_data.get_value() for \
@@ -44,7 +46,7 @@ def load_data(request):
         url_name = request.path
         
     tpl_datas = list(TemplateData.objects.filter(Q(page='global')|\
-                        (Q(page=url_name))))
+                        (Q(page=url_name)), lang=get_language()))
     needed_pages = [tpl_data.inherit_page for tpl_data in tpl_datas \
                     if tpl_data.inherit_page != None]
     needed_datas = {(tpl_data.key, tpl_data.page):tpl_data.get_value() for \
@@ -65,5 +67,5 @@ def load_data(request):
                 
     if HAS_META and getattr(settings, 'TEMPLATE_DATA_LOAD_META', True):
         res.update(load_meta(request))
-        
+    
     return res   

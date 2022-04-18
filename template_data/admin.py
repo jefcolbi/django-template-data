@@ -27,9 +27,9 @@ def get_url_choices():
         if isinstance(l, URLPattern):
             url_name = l.name
             if url_name:
-                yield url_name + f" ({str(l.pattern)})"
-            else:
-                yield acc + [str(l.pattern)]
+                yield url_name #+ f" ({str(l.pattern)})"
+            #else:
+            #    yield acc + [str(l.pattern)]
         elif isinstance(l, URLResolver):
             desc_pattern = l.pattern.describe()
             desc_pattern = desc_pattern.replace("'", "")
@@ -53,5 +53,5 @@ class TemplateDataForm(forms.ModelForm):
 
 @admin.register(TemplateData)
 class TemplateDataAdmin(admin.ModelAdmin):
-    list_display = ['id', 'page', 'key', 'value', 'type']
+    list_display = ['id', 'page', 'lang', 'key', 'value', 'type']
     form = TemplateDataForm
