@@ -21,9 +21,11 @@ class Command(DataMixin, BaseCommand):
             with (settings.BASE_DIR / file_name).open() as fp:
                 data = json.load(fp)
 
-            for key, details in data.items():
-                self.add_data_in_db(key, details['type'], details['value'], details['lang'], details['page'],
-                                    details['inherit_page'])
+            for item in data:
+                for key, details in item.items():
+                    self.add_data_in_db(key, details['type'], details['value'], details['lang'], details['page'],
+                                        details['inherit_page'])
+                    break
 
             print(f"restored {file_name}")
         except Exception as e:

@@ -11,19 +11,22 @@ class Command(DataMixin, BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("file", type=str, help="The json file where to store the data")
+        parser.add_argument('--indent', type=int, default=4, help='The indentation number')
 
     def handle(self, *args, **options):
         file_name = options['file']
+        indent = options.get('indent')
 
         try:
-            data = {}
+            data = []
 
             for tpl_data in TemplateData.objects.all():
-                data[tpl_data.key] = {'type': tpl_data.type, 'value': tpl_data.value, 'lang': tpl_data.lang,
+                data.append({tpl_data.key: {'type': tpl_data.type, 'value': tpl_data.value, 'lang': tpl_data.lang,
                                       'page': tpl_data.page, 'inherit_page': tpl_data.inherit_page}
+                             })
 
             with (settings.BASE_DIR / file_name).open('w') as fp:
-                json.dump(data, fp)
+                json.dump(data, fp, indent=indent)
 
             print(f"saved data to {file_name}")
         except Exception as e:
