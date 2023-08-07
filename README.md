@@ -136,6 +136,43 @@ After saving in bd all the texts, use the command`python  manage.py save_data fi
 
 To restore these data in your database use  `python manage.py restore_data file_name.json`
 
+
+### Template rewriting
+
+#### Edit
+
+Template rewriting is a feature provided to re-write existing templates to conform with Django Template Data.
+
+Start by editing your templates and add the attribute `tpl-data-key` in the tags you want to create template data for.  
+For example, if you have a h2 tag like this  
+`<h2>My custom title</h2>`
+
+you can edit it like this  
+`<h2 tpl-data-key="title">My custom title</h2>`
+
+It will be rewritten in  
+`<h2>{{ title }}</h2>`  
+
+and a new template data entry will be added in database.
+
+You can inform about the tag's text language by using `tpl-data-lang` like  
+`<h2 tpl-data-key="title" tpl-data-lang="en">My custom title</h2>`  
+to inform that your text is in English.
+
+#### Process
+
+After you have edited your templates files run the django command `rewrite_template`  
+Examples:
+
+To rewrite all the templates linked to your views, do:  
+`python manage.py rewrite_template --views`
+
+To rewrite a single base template file, do:  
+`python manage.py rewrite_template --file=core/base.html`
+
+To rewrite a single template file, do:  
+`python manage.py rewrite_template --file=core/index.html --pagename=index`
+
 ### Contributing
 
 Contributions are welcome. It is FOSS!
