@@ -15,10 +15,9 @@ def load_meta(request):
     url_name = resolve(request.path_info).url_name
     if not url_name:
         url_name = request.path
-    lang = get_language()
-                
+
     tpl_datas = list(TemplateData.objects.filter(Q(page='global')|\
-                        (Q(page=url_name)), key__startswith="meta_").filter(Q(lang=lang)|Q(lang__isnull=True)))
+                        (Q(page=url_name)), key__startswith="meta_"))
     needed_pages = [tpl_data.inherit_page for tpl_data in tpl_datas \
                     if tpl_data.inherit_page != None]
     needed_datas = {(tpl_data.key, tpl_data.page):tpl_data.get_value() for \
@@ -45,10 +44,8 @@ def load_data(request):
     if not url_name:
         url_name = request.path
 
-    lang = get_language()
-        
     tpl_datas = list(TemplateData.objects.filter(Q(page='global')|\
-                        (Q(page=url_name))).filter(Q(lang=lang)|Q(lang__isnull=True)))
+                        (Q(page=url_name))))
     needed_pages = [tpl_data.inherit_page for tpl_data in tpl_datas \
                     if tpl_data.inherit_page != None]
     needed_datas = {(tpl_data.key, tpl_data.page):tpl_data.get_value() for \

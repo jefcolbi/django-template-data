@@ -18,7 +18,6 @@ class TemplateData(models.Model):
     
     key = models.CharField(max_length=255)
     page = models.CharField(max_length=100, default='global')
-    lang = models.CharField(max_length=100, choices=settings.LANGUAGES, null=True, blank=True)
     inherit_page = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
     value = models.TextField(null=True, blank=True)
@@ -39,4 +38,4 @@ class TemplateData(models.Model):
         elif self.type == self.TYPES.MEDIA:
             return self.media
 
-from .admin import *
+# from .admin import *

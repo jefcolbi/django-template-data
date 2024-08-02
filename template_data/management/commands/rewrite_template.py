@@ -153,7 +153,8 @@ class Command(DataMixin, BaseCommand):
             with (tpl_path.parent / tpl_path.name.replace('.html', '.new.html')).open('w') as fp:
                 fp.write(faked_content)
 
-            root = etree.fromstring(faked_content)
+            parser = etree.HTMLParser()
+            root = etree.fromstring(faked_content, parser=parser)
 
             for node in root.iter():
                 tpl_data_key = node.get('tpl-data-key')
@@ -172,9 +173,16 @@ class Command(DataMixin, BaseCommand):
                                         page=page_name, defaults=defaults)
 
             etree.indent(root, space="    ")
-            rewritten_content = etree.tostring(root).decode()
+            rewritten_content = etree.tostring(root, pretty_print=True, method="html",
+                                               encoding="utf-8").decode()
             rewritten_content = self.rgx_tag_uncomment.sub(r"\1", rewritten_content)
             rewritten_content = rewritten_content.replace('<fake>', '').replace('</fake>', '').strip()
+            rewritten_content = rewritten_content.rstrip(r'</html>').lstrip('<html>')
+            rewritten_content = rewritten_content.strip()
+            rewritten_content = rewritten_content.rstrip(r'</body>').lstrip('<body>')
+            rewritten_content = rewritten_content.strip()
+            rewritten_content = self.rgx_unindent.sub('\n', rewritten_content)
+            rewritten_content = self.rgx_unindent.sub('\n', rewritten_content)
             rewritten_content = self.rgx_unindent.sub('\n', rewritten_content)
             rewritten_content = self.rgx_bloc_linify.sub(r"\n\n\n\1", rewritten_content)
             # print(rewritten_content)

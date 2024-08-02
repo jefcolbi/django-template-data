@@ -21,9 +21,14 @@ class Command(DataMixin, BaseCommand):
             data = []
 
             for tpl_data in TemplateData.objects.all():
-                data.append({tpl_data.key: {'type': tpl_data.type, 'value': tpl_data.value, 'lang': tpl_data.lang,
-                                      'page': tpl_data.page, 'inherit_page': tpl_data.inherit_page}
-                             })
+                tpl_data_dict = {}
+                for k, v in tpl_data.__dict__.items():
+                    if k in ['type', 'page', 'inherit_page']:
+                        tpl_data_dict[k] = v
+                    elif k.startswith('value_') or k.startswith('media_'):
+                        tpl_data_dict[k] = v
+                print(tpl_data_dict)
+                data.append({tpl_data.key: tpl_data_dict})
 
             with (settings.BASE_DIR / file_name).open('w') as fp:
                 json.dump(data, fp, indent=indent)

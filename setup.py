@@ -18,13 +18,14 @@ URL = 'https://github.com/jefcolbi/django-template-data'
 EMAIL = 'jefcolbi@gmail.com'
 AUTHOR = 'jefcolbi'
 REQUIRES_PYTHON = '>=3.5'
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
     "django>=3.0",
     "lxml",
-    "html5-parser"
+    "html5-parser",
+    "django-modeltranslation",
 ]
 
 # What packages are optional?

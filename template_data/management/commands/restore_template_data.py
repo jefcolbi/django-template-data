@@ -10,21 +10,20 @@ class Command(DataMixin, BaseCommand):
     """Install the theme"""
 
     def add_arguments(self, parser):
-        parser.add_argument("file", type=str, help="The json file where to store the data")
+        parser.add_argument("file", type=str, help="The json file where to load the data")
 
     def handle(self, *args, **options):
         file_name = options['file']
 
         try:
-            data = {}
-
             with (settings.BASE_DIR / file_name).open() as fp:
                 data = json.load(fp)
 
             for item in data:
                 for key, details in item.items():
-                    self.add_data_in_db(key, details['type'], details['value'], details['lang'], details['page'],
-                                        details['inherit_page'])
+                    page = details.pop('page')
+                    TemplateData.objects.update_or_create(key=key, page=page,
+                                                          defaults=details)
                     break
 
             print(f"restored {file_name}")

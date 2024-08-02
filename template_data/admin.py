@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import URLPattern, URLResolver, NoReverseMatch
 from django import forms
 from django.urls import get_resolver
+from modeltranslation.admin import TranslationAdmin
 
 try:
     URL_EX_PREFIXES = settings.URL_CHOICES_EXLUDE_PREFIXES
@@ -52,6 +53,6 @@ class TemplateDataForm(forms.ModelForm):
     page = forms.ChoiceField(choices=get_url_choices)
 
 @admin.register(TemplateData)
-class TemplateDataAdmin(admin.ModelAdmin):
-    list_display = ['id', 'page', 'lang', 'key', 'value', 'type']
+class TemplateDataAdmin(TranslationAdmin):
+    list_display = ['id', 'page', 'key', 'value', 'type']
     form = TemplateDataForm
