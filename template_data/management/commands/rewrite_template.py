@@ -168,9 +168,9 @@ class Command(DataMixin, BaseCommand):
                     except:
                         pass
 
-                    defaults = {'value': previous_text}
-                    TemplateData.objects.update_or_create(key=tpl_data_key, lang=lang,
-                                        page=page_name, defaults=defaults)
+                    defaults = {f'value_{lang}': previous_text}
+                    TemplateData.objects.update_or_create(key=tpl_data_key, page=page_name,
+                                    defaults=defaults)
 
             etree.indent(root, space="    ")
             rewritten_content = etree.tostring(root, pretty_print=True, method="html",
