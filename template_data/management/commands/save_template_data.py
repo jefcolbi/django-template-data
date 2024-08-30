@@ -31,7 +31,7 @@ class Command(DataMixin, BaseCommand):
                 data.append({tpl_data.key: tpl_data_dict})
 
             with (settings.BASE_DIR / file_name).open('w') as fp:
-                json.dump(data, fp, indent=indent)
+                json.dump(data, fp, indent=indent, ensure_ascii=False)
 
             print(f"saved data to {file_name}")
         except Exception as e:
